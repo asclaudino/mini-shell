@@ -1,0 +1,1 @@
+## Mini shell project for CSC-33 - Operating systems
