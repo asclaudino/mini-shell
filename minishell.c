@@ -11,7 +11,7 @@
 int main() {
     char prompt[] = "minishell-cmd> ";
     char line[MAX_ARGS * MAX_ARG_LEN];
-    char *args[MAX_ARGS + 1]; // +1 for NULL terminator
+    char *args[MAX_ARGS + 1]; 
     int fd_in, fd_out;
     pid_t pid;
     int status;
@@ -47,7 +47,7 @@ int main() {
         int i;
         for (i = 0; args[i] != NULL; i++) {
             if (strcmp(args[i], ">") == 0) {
-                // Redirect stdout to file
+                // Redirecting stdout to file
                 if (args[i+1] == NULL) {
                     fprintf(stderr, "Error: missing filename for stdout redirection\n");
                     break;
@@ -62,7 +62,7 @@ int main() {
                 close(fd_out);
                 break;
             } else if (strcmp(args[i], "<") == 0) {
-                // Redirect stdin from file
+                // Redirecting stdin from file
                 if (args[i+1] == NULL) {
                     fprintf(stderr, "Error: missing filename for stdin redirection\n");
                     break;
@@ -79,23 +79,22 @@ int main() {
             }
         }
         if (args[i] != NULL) {
-            // Redirect command failed
+            // Redirecting command failed
             continue;
         }
 
-        // Spawn new process
+        // Novo processo
         pid = fork();
         if (pid == -1) {
             perror("fork");
             continue;
         } else if (pid == 0) {
-            // Child process
+            // Processo filho
             execv(args[0], args);
-            // If we get here, execv failed
             perror("execv");
             exit(EXIT_FAILURE);
         } else {
-            // Parent process
+            // Processo Pai
             wait(&status);
         }
 
